@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="./dist/particle.min.js"></script>
+  <style>
+    html, body{
+      margin: 0;
+      padding: 0;
+    }
+    #content{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      min-width: 600px;
+      min-height: 480px;
+      overflow: hidden;
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <canvas id="canvas"></canvas>
+  </div> 
+  <script type="text/javascript">
+    var wrap = document.getElementById('content')
+    var canvas = document.getElementById('canvas')
+    canvas.width = wrap.offsetWidth
+    canvas.height = wrap.offsetHeight
+    
+    var particleStars = new ParticleStars(canvas, {
+      color: {r: 240, g: 240, b: 240},
+      onmousemove: true
+    })
+    particleStars.show()
+  </script>
+</body>
+</html>
