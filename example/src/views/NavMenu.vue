@@ -72,12 +72,12 @@ export default {
 }
 
 .nav-logo-img{
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 }
 .nav-logo-text{
   margin-left: 14px;
-  font-size: 22px;
+  font-size: 20px;
   color: #fff;
   font-weight: 600;
 }
