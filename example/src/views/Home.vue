@@ -2,12 +2,14 @@
   <div id="home">
     <nav-menu :value="menus" @click="onClick" :over-banner="overBanner"></nav-menu>
     <banner></banner>
+    <particle-view></particle-view>
   </div>
 </template>
 
 <script>
 import NavMenu from '@/views/NavMenu.vue'
 import Banner from '@/views/Banner.vue'
+import ParticleView from '@/components/ParticleView.vue'
 
 export default {
   name: 'Home',
@@ -31,15 +33,11 @@ export default {
       console.log(`click, key ${key}, name ${name}`)
     }
   },
-  components: { NavMenu, Banner }  
+  components: { NavMenu, Banner, ParticleView }  
 }
 </script>
 
 <style scoped>
-.test{
-  margin-top: 100px;
-  height: 50px;
-  color: aqua;
-}
+
 
 </style>

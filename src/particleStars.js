@@ -16,11 +16,16 @@ class ParticleStar {
   constructor(canvas = {}, options = {}) {
     this.canvas = canvas
     this.options = options
+    this.color = options.color || {r: 200, g: 200, b: 200}
+    this.flickerFactor = (options.flickerFactor > 0 && options.flickerFactor < 0.5) ? Number(options.flickerFactor) : 0.01
+    this.stepFactor = (options.stepFactor > 0 && options.stepFactor < 10) ? Number(options.stepFactor) : 1
+    this.delta = (options.delta > 0 && options.delta < 1) ? Number(options.delta) : 0.1
+
     this.cWidth = 0
     this.cHeight = 0
     this.ctx = null
     this.particles = []
-    this.mousePos = [0, 0]
+    this.mousePos = [9999, 9999]
     this.winFrameId = null
   }
   init () {
@@ -30,7 +35,7 @@ class ParticleStar {
     this.cHeight = this.canvas.height
     this.ctx = this.canvas.getContext('2d')
 
-    for (var i = 0; i < PARTICLE_NUM; i++) {
+    for (let i = 0; i < PARTICLE_NUM; i++) {
       this.particles[i] = new Particle()
       this.particles[i].init(this.getInitOptions())
     }
@@ -42,8 +47,10 @@ class ParticleStar {
       if (this.options.onmousemove) {
         self = this
         this.canvas.onmousemove = (e) => {
-          self.updateMousePos(e.clientX, e.clientY)
-          console.log(e, self)
+          self.updateMousePos(e.offsetX, e.offsetY)
+        }
+        this.canvas.onmouseleave = (e) => {
+          self.updateMousePos(9999, 9999)
         }
       }
 
@@ -54,7 +61,7 @@ class ParticleStar {
     }
   }
   getInitOptions() {
-    var direction = Math.random() > 0.5 ? 1 : -1
+    let direction = Math.random() > 0.5 ? 1 : -1
     return {
       radius:
       Math.random() > 0.9 ? 1.5 + Math.random() * 0.5 : 0.5 + Math.random() * 0.5,
@@ -62,17 +69,17 @@ class ParticleStar {
       curY: Math.random() * this.cHeight,
       lastX: Math.random() * this.cWidth,
       lastY: Math.random() * this.cHeight,
-      stepX: Math.random() * 1 - 0.5,
-      stepY: Math.random() * 1 - 0.5,
-      delta: 0.1,
-      opacity: Math.random(),
-      flickerRate: direction * (Math.random() * 0.007 + 0.003),
+      stepX: (Math.random() * 1 - 0.5) * this.stepFactor,
+      stepY: (Math.random() * 1 - 0.5) * this.stepFactor,
+      delta: this.delta,
+      opacity: Math.random() - 0.1,
+      flickerRate: direction * (Math.random() * this.flickerFactor + 0.002),
       color: this.options.color
     }
   }
   draw() {
     this.ctx.clearRect(0, 0, this.cWidth, this.cHeight)
-    var self = this
+    let self = this
 
     this.winFrameId = window.requestAnimationFrame(function drawStep() {
       self.ctx.clearRect(0, 0, self.cWidth, self.cHeight)
@@ -81,16 +88,16 @@ class ParticleStar {
     })
   }
   moveParticle() {
-    for (var i = 0; i < this.particles.length; i++) {
-      var p = this.particles[i]
+    for (let i = 0; i < this.particles.length; i++) {
+      let p = this.particles[i]
 
-      var len = this.distanceOfTwoPoint(
+      let len = this.distanceOfTwoPoint(
         p.lastX,
         p.lastY,
         this.mousePos[0],
         this.mousePos[1]
       )
-      var thr = this.cHeight * 0.08
+      let thr = this.cHeight * 0.08
       if (len < thr * 0.95) {
         let tp = this.targetPointOfSpread(p.lastX, p.lastY, thr)
         p.curX = p.lastX + (tp.x - p.lastX) * p.delta
@@ -124,22 +131,22 @@ class ParticleStar {
     return Math.sqrt(Math.pow(x0 - x1, 2) + Math.pow(y0 - y1, 2))
   }
   targetPointOfSpread(x, y, r) {
-    var dx = x - this.mousePos[0]
-    var dy = y - this.mousePos[1]
-    var A = Math.atan2(dy, dx)
-    var targetX = r * Math.cos(A) + this.mousePos[0]
-    var targetY = r * Math.sin(A) + this.mousePos[1]
+    let dx = x - this.mousePos[0]
+    let dy = y - this.mousePos[1]
+    let A = Math.atan2(dy, dx)
+    let targetX = r * Math.cos(A) + this.mousePos[0]
+    let targetY = r * Math.sin(A) + this.mousePos[1]
     return {
       x: targetX,
       y: targetY
     }
   }
   targetPointOfRotate(x, y, r) {
-    var dx = x - this.mousePos[0]
-    var dy = y - this.mousePos[1]
-    var A = Math.atan2(dy, dx) - 0.1 * Math.PI
-    var targetX = r * Math.cos(A) + this.mousePos[0]
-    var targetY = r * Math.sin(A) + this.mousePos[1]
+    let dx = x - this.mousePos[0]
+    let dy = y - this.mousePos[1]
+    let A = Math.atan2(dy, dx) - 0.1 * Math.PI
+    let targetX = r * Math.cos(A) + this.mousePos[0]
+    let targetY = r * Math.sin(A) + this.mousePos[1]
     return {
       x: targetX,
       y: targetY

@@ -3,8 +3,11 @@
     <div class="banner-main">
       <h1 class="banner-title">{{ title }}</h1>
       <h2 class="banner-desc">{{ desc }}</h2>
-      <div class="banner-btns">
-
+      <div class="banner-btns flex-c-c">
+        <vue-button type="primary" size="medium" @click="toGithub">
+          <i class="iconfont icongithub-fill"></i>
+          <span>GitHub</span>
+        </vue-button>
       </div>
     </div>
     <div class="banner-quickstart"></div>
@@ -12,6 +15,8 @@
 </template>
 
 <script>
+import VueButton from '@/components/VueButton.vue'
+
 export default {
   name: 'Banner',
   data() {
@@ -20,6 +25,12 @@ export default {
       desc: 'A lightweight javaScript library for creating particles animation'
     }
   },
+  methods: {
+    toGithub () {
+      window.open('https://github.com/TheoXiong/particle-canvas', '_blank')
+    }
+  },
+  components: { VueButton }
 }
 </script>
 
@@ -31,10 +42,10 @@ export default {
   width: 100%;
   min-width: 1180px;
   line-height: 1.5;
-  background-color: #282b2e;
-  /* background: url('../assets/image/banner.jpg');
+  /* background-color: #282b2e; */
+  background: url('../assets/image/banner.png');
   background-repeat: no-repeat;
-  background-size: 100% 100%; */
+  background-size: 100% 100%;
 }
 .banner-main{
   padding-top: 175px;

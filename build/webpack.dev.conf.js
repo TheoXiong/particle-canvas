@@ -1,6 +1,6 @@
-const path = require("path");
-const merge = require("webpack-merge");
-const baseWebpackConfig = require("./webpack.base.conf");
+const path = require("path")
+const merge = require("webpack-merge")
+const baseWebpackConfig = require("./webpack.base.conf")
 
 module.exports = merge(baseWebpackConfig, {
   entry: path.resolve(__dirname, "../example/src/index.js"),
@@ -34,5 +34,5 @@ module.exports = merge(baseWebpackConfig, {
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['*', '.js', '.vue', '.json', ".ts"]
-  },
+  }
 });

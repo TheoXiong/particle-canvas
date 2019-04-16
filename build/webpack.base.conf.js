@@ -1,4 +1,5 @@
-const webpack = require("webpack");
+const webpack = require("webpack")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   module: {
@@ -77,5 +78,12 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.vue', '.json', ".ts"]
   },
-  plugins: [new webpack.optimize.ModuleConcatenationPlugin()]
+  plugins: [new UglifyJsPlugin({
+    uglifyOptions: {
+      compress: {
+        warnings: false
+      }
+    },
+    parallel: true
+  })]
 };

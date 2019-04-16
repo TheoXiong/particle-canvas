@@ -68,10 +68,10 @@ class Particle {
         if (typeof options.stepY === 'number' && !isNaN(options.stepY)) {
             this.stepY = options.stepY
         }
-        if (typeof options.delta === 'number' && options.delta >= 0 && options.delta <= 1) {
+        if (typeof options.delta === 'number' && options.delta > 0 && options.delta < 1) {
             this.delta = options.delta
         }
-        if (typeof options.opacity === 'number' && options.opacity >= 0 && options.opacity <= 1) {
+        if (typeof options.opacity === 'number' && options.opacity >= -0.1 && options.opacity <= 1) {
             this.opacity = options.opacity
         }
         if (typeof options.fadeInRate === 'number' && options.fadeInRate >= 0 && options.fadeInRate <= 1) {
@@ -80,7 +80,7 @@ class Particle {
         if (typeof options.fadeOutRate === 'number' && options.fadeOutRate >= 0 && options.fadeOutRate <= 1) {
             this.fadeOutRate = options.fadeOutRate
         }
-        if (typeof options.flickerRate === 'number' && options.flickerRate >= 0 && options.flickerRate <= 1) {
+        if (typeof options.flickerRate === 'number' && options.flickerRate >= -1 && options.flickerRate <= 1) {
             this.flickerRate = options.flickerRate
         }
         if (options.color &&
